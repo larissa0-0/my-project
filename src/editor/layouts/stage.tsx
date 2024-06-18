@@ -45,12 +45,14 @@ function Stage(){
       }
     ];
 
-    function renderComponents(components:Component[]){
-      return components.map((component:Component)=>{
-        if(component.name === 'Button'){
-          return <Button {...component.props}>{component.props.children}</Button>
-        }else if(component.name === 'Space'){
-          return <Space {...component.props}>{component.props.children || component.props.type}</Space>
+    function renderComponents(components:Component[]):React.ReactNode {
+      return components.map((component)=>{
+        if(!ComponentMap[component.name]){
+          return null;
+        }
+
+        if(ComponentMap[component.name]){
+          return React.createElement(ComponentMap[component.name],component.props, component.props.children||[])
         }
       })
     }
