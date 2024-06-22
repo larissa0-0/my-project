@@ -7,7 +7,10 @@ interface Component{
   props:any,
   children?:Component[];
 }
+
+
 function Stage(){
+  // 定义一些示例组件
     const components:Component[] = [
       {
         id:1,
@@ -44,6 +47,10 @@ function Stage(){
         ]
       }
     ];
+    const ComponentMap:Record<string, React.ComponentType<any>>  = {
+      Button,
+      Space,
+    }
 
     function renderComponents(components:Component[]):React.ReactNode {
       return components.map((component)=>{
