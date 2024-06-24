@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Space } from 'antd';
+import { Button, Space, Input  } from 'antd';
 
 interface Component{
   id:number,
@@ -25,7 +25,7 @@ function Stage(){
         name:'Space',
         props:{
           size:'large',
-          type:'空间'
+          type:'space'
         },
         children:[
           {
@@ -45,22 +45,37 @@ function Stage(){
             }
           }
         ]
+      },{
+        id:3,
+        name:'Input',
+        props:{
+          type:'input',
+          size:'small'
+        }
       }
     ];
     const ComponentMap:Record<string, React.ComponentType<any>>  = {
       Button,
       Space,
+      Input
     }
 
     function renderComponents(components:Component[]):React.ReactNode {
       return components.map((component)=>{
-        if(!ComponentMap[component.name]){
+        const Component = ComponentMap[component.name];
+        if(!Component){
           return null;
         }
 
-        if(ComponentMap[component.name]){
-          return React.createElement(ComponentMap[component.name],component.props, component.props.children||[])
-        }
+          // 递归渲染 children
+        const children = component.children ? renderComponents(component.children) : component.props.children;
+
+        return (
+          <Component key={component.id} {...component.props}>
+            {children}
+          </Component>
+        );
+    
       })
     }
 
