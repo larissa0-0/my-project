@@ -8,7 +8,7 @@ import "./index.scss";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 
-function Layout(){
+const Layout: React.FC = () =>{
     return(
       <div className="layout">
         <div className='header'>
