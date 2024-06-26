@@ -16,7 +16,7 @@ function Stage(){
         id:1,
         name:'Button',
         props:{
-          type:'button',
+          type:'primary',
           children:'按钮'
         },
       },
@@ -25,56 +25,68 @@ function Stage(){
         name:'Space',
         props:{
           size:'large',
-          type:'space'
         },
         children:[
           {
             id:3,
-            name:'button',
+            name:'Button',
             props:{
-              type:'button1',
+              type:'primary',
               children:'按钮1'
             }
           },
           {
             id:4,
-            name:'button',
+            name:'Button',
             props:{
-              type:'button2',
+              type:'primary',
               children:'按钮2'
             }
           }
         ]
-      },{
-        id:3,
-        name:'Input',
-        props:{
-          type:'input',
-          size:'small'
-        }
-      }
+      },
+      // {
+      //   id:3,
+      //   name:'Input',
+      //   props:{
+      //     type:'input',
+      //     size:'small'
+      //   }
+      // }
     ];
     const ComponentMap:Record<string, React.ComponentType<any>>  = {
       Button,
       Space,
-      Input
+      // Input
     }
 
     function renderComponents(components:Component[]):React.ReactNode {
       return components.map((component)=>{
         const Component = ComponentMap[component.name];
+
+        console.log(Component, 'Component=====');
+        
         if(!Component){
           return null;
         }
 
-          // 递归渲染 children
+        // 递归渲染 children
         const children = component.children ? renderComponents(component.children) : component.props.children;
 
+
+        console.log(children,'children===children====');
+        
         return (
           <Component key={component.id} {...component.props}>
             {children}
           </Component>
         );
+
+        // if (ComponentMap[component.name]) {
+        //   console.log(ComponentMap[component.name], 'ComponentMap[component.name]========');
+        //   return React.createElement(ComponentMap[component.name], component.props, component.props.children || renderComponents(component.children || []))
+        // }
+
     
       })
     }
